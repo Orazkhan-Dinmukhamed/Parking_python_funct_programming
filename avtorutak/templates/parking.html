@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Parking | Места</title>
+</head>
+
+<body>
+
+    <h1>Все места и статистика</h1>
+
+    <h3>Количество мест : {{total}}</h3>
+    <h3>Свободных : {{free_count}}</h3>
+    <h3>Средняя цена часа : {{avg_price}}</h3>
+
+    <h2>Список мест</h2>
+
+    {% for space in data %}
+        <div class="space-card">
+            <div class="space-info">
+                <b>Number: {{ space.number }}</b> | Zone: {{ space.zone_id }} | 
+                Status: <span class="status-{{ space.status }}">{{ space.status }}</span>
+            </div>
+
+            {% if space.status == 'free' %}
+                <form action="/occupy/{{ space.id }}" method="POST" style="margin: 0;">
+                    <button type="submit" class="btn-occupy">Occupie</button>
+                </form>
+            {% else %}
+                <button disabled style="padding: 8px 16px; border-radius: 6px; border: 1px solid #ccc;">Occupied</button>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <br>
+    <a href="/" class="home-btn">На главную</a>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        .space-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            max-width: 600px;
+        }
+
+        .space-info {
+            font-size: 16px;
+        }
+
+        .btn-occupy {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-occupy:hover {
+            background-color: #003d82;
+        }
+
+        .status-occupied {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .status-free {
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .home-btn:hover {
+            background-color: #003d82;
+        }
+    </style>
