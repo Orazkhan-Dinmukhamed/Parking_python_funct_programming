@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Выбор времени парковки</title>
+</head>
+<body>
+    <h3>Выберите количество часов для парковочного места ID: {{ space_id }}</h3>
+    
+    <form action="/occupy-with-hours/{{ space_id }}" method="POST">
+        <label for="hours">Количество часов:</label>
+        <select name="hours" id="hours">
+            <option value="2">1 часа</option>
+            <option value="3">2 часа</option>
+            <option value="4">3 часа</option>
+            <option value="5">4 часов</option>
+        </select>
+        <br><br>
+        <button type="submit">Подтвердить</button>
+    </form>
+    
+    <br>
+    <a href="/parking">Назад к списку</a>
+</body>
+</html>

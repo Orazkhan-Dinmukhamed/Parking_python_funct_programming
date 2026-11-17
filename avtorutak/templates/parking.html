@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Parking</title>
+    <meta http-equiv="refresh" content="1">
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .space-card { display: flex; justify-content: space-between; padding: 10px 20px; margin-bottom: 10px; max-width: 600px; }
+        .btn-occupy { background-color: #0056b3; color: white; border: none; padding: 8px 16px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        .frp-panel { background: #f0f4f8; border-left: 4px solid #0056b3; padding: 10px 15px; margin-bottom: 15px; max-width: 600px; }
+    </style>
+</head>
+<body>
+
+    <h1>Все места и статистика</h1>
+
+    <h3>Количество мест : {{ total }}</h3>
+    <h3>Свободных : {{ free_count }}</h3>
+    <h3>Средняя цена часа : {{ avg_price }}</h3>
+
+    <div class="frp-panel">
+        <b>Скоро освободятся (<=1ч):</b> {{ expiring | length }} шт.<br>
+        <b>Выручка (Scan):</b> {{ revenue }}<br>
+        <b>События (Distinct):</b> {% for e in events %}[{{ e.status }}] {% endfor %}<br>
+        <b>Метки (Map):</b> {{ labels | join(', ') }}
+    </div>
+
+    <h2>Список мест</h2>
+
+    {% for space in data %}
+        <div class="space-card">
+            <div>
+                <b>Number: {{ space.number }}</b> | Zone: {{ space.zone_id }} | 
+                Status: {{ space.status }}
+                {% if space.status == 'occupied' %} | Hours: {{ space.hours }}ч. {% endif %}
+            </div>
+
+            {% if space.status == 'free' %}
+                <a href="/select-hours/{{ space.id }}"><button type="button" class="btn-occupy">Occupie</button></a>
+            {% else %}
+                <button disabled style="padding: 8px 16px;">Occupied</button>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <br>
+    <a href="/" style="display:inline-block; padding:10px 20px; background:#0056b3; color:white; border-radius:8px; text-decoration:none;">На главную</a>
+
+</body>
+</html>
